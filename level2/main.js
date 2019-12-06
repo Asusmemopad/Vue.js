@@ -3,8 +3,17 @@ const app = new Vue({
   data: {
     friends: []
   },
+  methods: {
+    deleteFriend(id) {
+      fetch("http://rest.learncode.academy/api/someuser/friends/" + id, {
+        method: "DELETE"
+      }).then(() => {
+        console.log("deleted");
+      });
+    }
+  },
   mounted() {
-    fetch("http://rest.learncode.academy/api/vue-5/friends")
+    fetch("http://rest.learncode.academy/api/someuser/friends")
       .then(response => response.json())
       .then(data => {
         this.friends = data;
@@ -12,7 +21,9 @@ const app = new Vue({
   },
   template: `
         <div>
-            <li v-for="friend in friends">{{friend.name}}</li>
+            <li v-for="friend in friends">
+              <button v-on:click="deleteFriend(friend.id)">x</button>{{friend.name}}
+            </li> 
         </div>
     `
 });
