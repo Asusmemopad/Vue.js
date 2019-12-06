@@ -4,11 +4,11 @@ const app = new Vue({
     friends: []
   },
   methods: {
-    deleteFriend(id) {
+    deleteFriend(id, i) {
       fetch("http://rest.learncode.academy/api/someuser/friends/" + id, {
         method: "DELETE"
       }).then(() => {
-        console.log("deleted");
+        this.friends.splice(i, 1);
       });
     }
   },
@@ -21,8 +21,8 @@ const app = new Vue({
   },
   template: `
         <div>
-            <li v-for="friend in friends">
-              <button v-on:click="deleteFriend(friend.id)">x</button>{{friend.name}}
+            <li v-for="friend, i in friends">
+              <button v-on:click="deleteFriend(friend.id, i)">x</button>{{friend.name}}
             </li> 
         </div>
     `
